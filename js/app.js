@@ -13,7 +13,7 @@ let properties = [
 // ============== BACKEND INTEGRATION ====================
 async function loadBackendDeals() {
     try {
-        const response = await fetch("http://localhost:4000/api/deals");
+        const response = await fetch("/api/deals");
         const data = await response.json();
         const apiDeals = Array.isArray(data.deals) ? data.deals : [];
         const backendProps = apiDeals.map(mapDealToProperty);
