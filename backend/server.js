@@ -181,15 +181,17 @@ app.get('/api/refresh', async (req, res) => {
 
 // Start the server only in local development.
 // Vercel will import this file and use the exported `app`.
-const port = process.env.PORT || 4000;
-if (require.main === module) {
-    app.listen(port, () => {
-        console.log(`Backend running at http://localhost:${port}`);
-        // Perform an initial refresh on startup
-        refreshDeals().catch(err => console.error('Initial refresh error:', err));
-    });
-} else {
-    module.exports = app;
-    // Optional: perform one refresh when the module is loaded.
-    refreshDeals().catch(err => console.error('Initial refresh error:', err));
-}
+//const port = process.env.PORT || 4000;
+//if (require.main === module) {
+//    app.listen(port, () => {
+//        console.log(`Backend running at http://localhost:${port}`);
+//        // Perform an initial refresh on startup
+//        refreshDeals().catch(err => console.error('Initial refresh error:', err));
+//    });
+//} else {
+//    module.exports = app;
+//    // Optional: perform one refresh when the module is loaded.
+//    refreshDeals().catch(err => console.error('Initial refresh error:', err));
+//}
+module.exports = app;
+refreshDeals().catch(err => console.error('Initial refresh error:', err));
