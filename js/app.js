@@ -71,6 +71,8 @@ document.querySelector('.waitlist-form')?.addEventListener('submit', function (e
 function capitalize(str) { return str ? str.charAt(0).toUpperCase() + str.slice(1) : ""; }
 function renderProperties() {
     let filtered = [...properties];
+    const allStrategiesSelected = filterStrategy && (filterStrategy.value === "all" || filterStrategy.value === "All Strategies");
+
     if (filterStrategy && filterStrategy.value !== "all") {
         filtered = filtered.filter(p => p.strategy === filterStrategy.value);
     }
@@ -100,9 +102,13 @@ function renderProperties() {
     if (!filtered.length) {
         propertyListEl.innerHTML = "<p>No properties found.</p>"; return;
     }
-    filtered.forEach(property => {
+    filtered.forEach((property, index) => {
         const card = document.createElement("div");
         card.className = "property-card";
+        if (allStrategiesSelected) {
+            card.classList.add("card-highlight");
+            card.style.animationDelay = `${index * 0.1}s`;
+        }
         const roi = calculateROI(property, property.strategy).toFixed(1);
         const score = typeof property.dealScore === "number" ? property.dealScore : null;
         let badgeText = "Demo", badgeClass = "badge-demo";
@@ -515,6 +521,7 @@ if (clearFiltersBtn) {
         if (filterMaxPrice) filterMaxPrice.value = "";
         if (sortBy) sortBy.value = "none";
         renderProperties();
+
     });
 }
 window.addEventListener("DOMContentLoaded", async () => {

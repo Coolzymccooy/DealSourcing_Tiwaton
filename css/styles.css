@@ -232,6 +232,40 @@ main {
     gap: 1.4em;
 }
 
+.hero-tagline {
+    display: inline-block;
+    position: relative;
+    animation: tagline-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes tagline-pulse {
+    0% {
+        transform: translateY(0);
+        letter-spacing: 0;
+        opacity: 0.7;
+    }
+
+    10% {
+        transform: translateY(-2px) scale(1.01);
+        letter-spacing: 0.03em;
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateY(0);
+        letter-spacing: 0.01em;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.75;
+    }
+}
+
+
 /* ------------------------
    Quiz Modal (Overlay)
 ------------------------- */
@@ -505,6 +539,35 @@ main {
         color: #f9fafb;
         margin-top: 0.15rem;
     }
+
+.card-location,
+.card-address {
+    transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card-highlight .card-location,
+.card-highlight .card-address {
+    color: #facc15;
+    text-shadow: 0 0 10px rgba(250,204,21,0.6);
+    animation: card-pop 0.6s ease-out;
+}
+
+@keyframes card-pop {
+    0% {
+        transform: translateY(2px);
+        opacity: 0;
+    }
+
+    40% {
+        transform: translateY(-2px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
 
 .meta-row {
     display: flex;
@@ -836,6 +899,9 @@ main {
         margin: 1.25rem auto 1.5rem;
         padding: 28px 10px 20px;
         max-width: 100%;
+        position: relative;
+        overflow: hidden;
+        animation: hero-float 8s ease-in-out infinite;
     }
 
         .hero-section h2 {
@@ -845,6 +911,48 @@ main {
         .hero-section p {
             font-size: 0.95rem;
         }
+    @keyframes hero-float {
+        0% {
+            transform: translateY(0);
+            box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+        }
+
+        50% {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 36px rgba(15,23,42,0.16);
+        }
+
+        100% {
+            transform: translateY(0);
+            box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+        }
+    }
+
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 55%);
+        mix-blend-mode: screen;
+        opacity: 0;
+        pointer-events: none;
+        animation: hero-glow 6s ease-in-out infinite;
+    }
+
+    @keyframes hero-glow {
+        0%, 40% {
+            opacity: 0;
+        }
+
+        55% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
 
     .hero-proofs,
     .hero-stats {
