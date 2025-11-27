@@ -109,28 +109,27 @@ main {
 ------------------------- */
 .hero-section {
     text-align: center;
-    padding: 42px 10px 32px 10px; /* reduced from 60px/38px */
-    background: #ffffff; /* clean white instead of gradient */
+    padding: 42px 10px 32px 10px;
+    background: #ffffff;
     border-radius: 14px;
     margin: 32px auto 36px;
     box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-    color: #111827; /* dark text for contrast */
+    color: #111827;
     max-width: 680px;
 }
 
     .hero-section h2 {
-        color: #111827; /* matches page text */
-        font-size: 2rem; /* smaller from 2.2em */
+        color: #111827;
+        font-size: 2rem;
         margin-bottom: 10px;
         font-weight: 700;
     }
 
     .hero-section p {
-        color: #374151; /* softer grey */
-        font-size: 1rem; /* smaller from 1.12em */
+        color: #374151;
+        font-size: 1rem;
         margin-bottom: 20px;
     }
-
 
 .hero-proofs {
     margin: 16px auto 20px auto;
@@ -138,17 +137,22 @@ main {
     justify-content: center;
     gap: 1.2em;
     flex-wrap: wrap;
-    font-size: 0.95em; /* smaller from 1.08em */
-    color: #0ea5e9; /* bright teal accent */
+    font-size: 0.95em;
+    color: #0ea5e9;
 }
 
-.strategy-btn, #start-quiz-btn {
+.hero-actions {
+    margin-bottom: 34px;
+}
+
+.strategy-btn,
+#start-quiz-btn {
     margin: 0 10px 10px 0;
-    padding: 12px 24px; /* smaller from 16px 30px */
-    font-size: 1em; /* smaller from 1.18em */
+    padding: 12px 24px;
+    font-size: 1em;
     border-radius: 8px;
     border: none;
-    background: #0ea5e9; /* teal matches theme */
+    background: #0ea5e9;
     color: #fff;
     font-weight: 600;
     cursor: pointer;
@@ -157,21 +161,11 @@ main {
     display: inline-block;
 }
 
-    .strategy-btn:hover, #start-quiz-btn:hover {
+    .strategy-btn:hover,
+    #start-quiz-btn:hover {
         background: #0284c7;
         transform: translateY(-2px) scale(1.03);
     }
-
-.hero-stats {
-    margin-top: 8px;
-    font-size: 0.95em; /* smaller from 1.07em */
-    font-weight: 600;
-    color: #0ea5e9; /* teal accent */
-    display: flex;
-    justify-content: center;
-    gap: 1.4em;
-}
-
 
 .waitlist-form {
     display: inline-flex;
@@ -230,38 +224,12 @@ main {
 
 .hero-stats {
     margin-top: 8px;
-    font-size: 1.07em;
-    font-weight: 500;
-    color: #1d3a6d;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #0ea5e9;
     display: flex;
     justify-content: center;
     gap: 1.4em;
-}
-
-@media (max-width:600px) {
-    .hero-section {
-        padding: 38px 6px 20px 6px;
-    }
-
-    #uk-map-container {
-        max-width: 180px;
-        margin-top: 14px;
-    }
-
-    .strategy-btn, #start-quiz-btn {
-        font-size: 1em;
-        padding: 11px 12px;
-    }
-
-    .hero-proofs, .hero-stats {
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    .waitlist-form {
-        margin-left: 0;
-        margin-top: 15px;
-    }
 }
 
 /* ------------------------
@@ -448,6 +416,7 @@ main {
         outline: 2px solid #22e3ff;
         outline-offset: 3px;
     }
+
 /* Card top – gold gradient */
 .card-top {
     padding: 1.6rem 1.2rem;
@@ -460,22 +429,13 @@ main {
 .card-type {
     font-size: 1.05rem;
     font-weight: 600;
-    color: #f9fafb; /* white on gold */
+    color: #f9fafb;
 }
 
 .card-badge {
     position: absolute;
     top: 1.2rem;
     right: 1.2rem;
-    padding: 0.35rem 0.9rem;
-    border-radius: 999px;
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(249, 250, 251, 0.4);
-    font-size: 0.8rem;
-    color: #f9fafb;
-}
-
-.card-badge {
     padding: 0.2rem 0.6rem;
     border-radius: 999px;
     font-size: 0.75rem;
@@ -519,6 +479,7 @@ main {
     font-size: 0.95rem;
     color: rgba(249, 250, 251, 0.9);
 }
+
 /* Card bottom */
 .card-bottom {
     padding: 0.9rem 1.2rem 1rem;
@@ -552,6 +513,7 @@ main {
     font-size: 0.8rem;
     color: #9ca3af;
 }
+
 /* ROI panel in card */
 .roi-panel {
     margin-top: 0.8rem;
@@ -598,7 +560,7 @@ main {
 }
 
 /* ------------------------
-   Modal
+   Modal container
 ------------------------- */
 .modal-backdrop {
     position: fixed;
@@ -646,6 +608,7 @@ main {
     background: transparent;
     color: #9ca3af;
 }
+
 /* Tabs */
 .tabs {
     display: flex;
@@ -680,20 +643,16 @@ main {
     .tab.active::after {
         width: 100%;
     }
+
 /* Modal subtitle */
 .calc-subtitle {
     margin: 0.6rem 0 0.8rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #e1c88d;
-}
-
-.calc-subtitle {
     font-size: 1rem;
-    margin-bottom: 0.5rem;
+    font-weight: 600;
     color: #e5e7eb;
 }
-/* === External Listing Link === */
+
+/* External listing link */
 .deal-link {
     display: inline-flex;
     align-items: center;
@@ -743,6 +702,7 @@ main {
         border-color: #22e3ff;
         box-shadow: 0 0 0 1px #22e3ff;
     }
+
 /* Result panel */
 .calc-result-panel {
     margin-top: 1rem;
@@ -816,33 +776,145 @@ main {
     opacity: 0.9;
 }
 
-/* ------------------------
+/* ========================
    Responsive tweaks
-------------------------- */
+======================== */
+
+/* Tablets / small laptops */
 @media (max-width: 900px) {
+    .main-nav {
+        margin-left: 0;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        font-size: 0.85rem;
+    }
+
     .form-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
-    .main-nav {
-        display: none; /* simplest for now on small screens */
-    }
 }
 
-@media (max-width: 600px) {
-    main {
-        padding: 0 1rem 2rem;
+/* Phones & small tablets */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.95rem;
     }
 
+    main {
+        max-width: 100%;
+        padding: 0 1rem 2rem;
+        margin: 0 auto 2rem;
+    }
+
+    /* Header stacks */
+    #app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1rem 0.75rem;
+    }
+
+    .header-text h1 {
+        font-size: 1.35rem;
+    }
+
+    .header-text p {
+        font-size: 0.8rem;
+    }
+
+    .main-nav {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.6rem;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    /* Hero */
+    .hero-section {
+        margin: 1.25rem auto 1.5rem;
+        padding: 28px 10px 20px;
+        max-width: 100%;
+    }
+
+        .hero-section h2 {
+            font-size: 1.5rem;
+        }
+
+        .hero-section p {
+            font-size: 0.95rem;
+        }
+
+    .hero-proofs,
+    .hero-stats {
+        flex-direction: column;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .strategy-btn,
+    #start-quiz-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .waitlist-form {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        margin: 12px 0 0;
+    }
+
+        .waitlist-form input[type="email"],
+        .waitlist-form button {
+            width: 100%;
+        }
+
+    /* Filters & deals */
     #filters {
-        padding: 0.9rem;
+        padding: 0.85rem;
+        gap: 0.75rem;
+    }
+
+    .filter-group {
+        min-width: 100%;
+    }
+
+    #property-list {
+        grid-template-columns: 1fr;
+    }
+
+    .property-card {
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Modal */
+    .calculator-modal {
+        width: 96%;
+        padding: 1rem 1rem 1.1rem;
     }
 
     .form-grid {
         grid-template-columns: 1fr;
     }
 
-    .calculator-modal {
-        padding: 1.1rem 1.1rem 1.3rem;
+    /* Footer */
+    .footer-inner {
+        flex-direction: column;
+        gap: 0.4rem;
+        text-align: left;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+    .main-nav {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+    }
+
+    .hero-section h2 {
+        font-size: 1.35rem;
     }
 }
