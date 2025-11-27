@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-    <!-- Header -->
     <header id="app-header">
-        <img src="assets/tiwaton-logo.png" alt="Tiwaton" class="logo-icon-img" />
-
+        <a href="index.html#hero-intro" class="logo-link">
+            <img src="assets/tiwaton-logo.png" alt="Tiwaton" class="logo-icon-img" />
+        </a>
         <div class="header-text">
             <h1>Deal Sourcing</h1>
             <p>
-                Find and analyse investment opportunities · Buy-to-Let · Flip · Renovate &amp; Sell
+                Find and analyse investment opportunities · Buy-to-Let · Flip · Renovate & Sell
             </p>
         </div>
         <nav class="main-nav">
@@ -25,23 +25,82 @@
             <a href="contact.html">Contact</a>
         </nav>
     </header>
-
-    <!-- Main content -->
     <main>
-        <!-- Deals section (filters + cards) -->
+        <!-- Enhanced Hero/Intro Section -->
+        <section id="hero-intro" class="hero-section">
+            <h2>Unlock Smart UK Property Investments</h2>
+            <p>
+                <strong>Curated by experts.</strong> Instantly source, analyze, and act on high-potential property deals—tailored for UK investors.
+            </p>
+            <div class="hero-proofs">
+                <span>🏆 3,000+ deals analyzed</span>
+                <span>💬 “I found 2x more ROI with Tiwaton!”</span>
+                <span>🔒 100% independent, no agent commission</span>
+            </div>
+            <div class="hero-actions">
+                <button class="strategy-btn" data-strategy="buy-to-let">See Buy-to-Let Deals</button>
+                <button class="strategy-btn" data-strategy="buy-to-flip">See Buy-to-Flip</button>
+                <button id="start-quiz-btn">Find My Deal</button>
+                <form class="waitlist-form">
+                    <input type="email" placeholder="Your Email (waitlist)" required>
+                    <button type="submit">Notify Me</button>
+                </form>
+            </div>
+            <div id="uk-map-container">
+                <svg id="uk-map" viewBox="0 0 180 250" width="180" height="250">
+                    ircle id="manchester" cx="80" cy="130" r="12" fill="#0a6eed" />
+                    ircle id="london" cx="120" cy="210" r="13" fill="#4bade9" />
+                    ircle id="birmingham" cx="100" cy="160" r="9" fill="#6fd1fc" />
+                    ircle id="leeds" cx="110" cy="110" r="8" fill="#23b0e1" />
+                    ircle id="liverpool" cx="65" cy="150" r="8" fill="#1f70c1" />
+                </svg>
+                <div class="hero-stats">
+                    <span id="active-deals">Active Opportunities: 16</span>
+                    <span id="avg-roi">Avg ROI: 10.5%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Modal (hidden) -->
+        <div id="quiz-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Deal Sourcing Quiz</h3>
+                <form id="quiz-form">
+                    <label>Preferred Location?</label>
+                    <select name="location">
+                        <option value="Manchester">Manchester</option>
+                        <option value="London">London</option>
+                        <option value="Birmingham">Birmingham</option>
+                        <option value="Leeds">Leeds</option>
+                        <option value="Liverpool">Liverpool</option>
+                    </select>
+                    <label>Target ROI (%)?</label>
+                    <input type="number" name="roi" placeholder="e.g. 8" min="0" step="0.5" />
+                    <label>Max Price (£)?</label>
+                    <input type="number" name="max-price" placeholder="e.g. 250000" min="0" step="5000" />
+                    <label>Interested Strategy?</label>
+                    <select name="strategy">
+                        <option value="buy-to-let">Buy-to-Let</option>
+                        <option value="buy-to-flip">Buy-to-Flip</option>
+                        <option value="renovate-sell">Renovate & Sell</option>
+                    </select>
+                    <button type="submit" id="complete-quiz-btn">See Deals</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Deals Section (hidden) -->
         <section id="deals">
-            <!-- Filters -->
-            <section id="filters" aria-label="Property Filters">
+            <section id="filters" class="hidden" aria-label="Property Filters">
                 <div class="filter-group">
                     <label for="filter-strategy">Investment Strategy</label>
                     <select id="filter-strategy">
                         <option value="all">All Strategies</option>
                         <option value="buy-to-let">Buy-to-Let</option>
                         <option value="buy-to-flip">Buy-to-Flip</option>
-                        <option value="renovate-sell">Renovate &amp; Sell</option>
+                        <option value="renovate-sell">Renovate & Sell</option>
                     </select>
                 </div>
-
                 <div class="filter-group">
                     <label for="filter-location">Location</label>
                     <select id="filter-location">
@@ -53,25 +112,14 @@
                         <option value="Liverpool">Liverpool</option>
                     </select>
                 </div>
-
                 <div class="filter-group">
                     <label for="filter-min-roi">Min ROI %</label>
-                    <input type="number"
-                           id="filter-min-roi"
-                           placeholder="e.g. 6"
-                           min="0"
-                           step="0.5" />
+                    <input type="number" id="filter-min-roi" placeholder="e.g. 6" min="0" step="0.5" />
                 </div>
-
                 <div class="filter-group">
                     <label for="filter-max-price">Max Price (£)</label>
-                    <input type="number"
-                           id="filter-max-price"
-                           placeholder="e.g. 300000"
-                           min="0"
-                           step="5000" />
+                    <input type="number" id="filter-max-price" placeholder="e.g. 300000" min="0" step="5000" />
                 </div>
-
                 <div class="filter-group">
                     <label for="sort-by">Sort By</label>
                     <select id="sort-by">
@@ -82,71 +130,43 @@
                         <option value="price-desc">Price (High → Low)</option>
                     </select>
                 </div>
-
-
                 <button id="clear-filters" aria-label="Clear All Filters">Clear</button>
             </section>
-
-            <!-- Property cards -->
-            <section id="property-list"
-                     aria-live="polite"
-                     aria-label="Available Properties">
+            <section id="property-list" class="hidden" aria-live="polite" aria-label="Available Properties">
                 <!-- Cards injected by app.js -->
             </section>
         </section>
-
     </main>
+
     <!-- Calculator Modal -->
-    <div class="modal-backdrop"
-         id="calculator-modal"
-         role="dialog"
-         aria-modal="true"
-         aria-labelledby="calculator-title">
+    <div class="modal-backdrop" id="calculator-modal" role="dialog" aria-modal="true" aria-labelledby="calculator-title">
         <div class="calculator-modal">
             <div class="modal-header">
                 <h2 id="calculator-title">Investment Calculator</h2>
                 <button class="close-btn" aria-label="Close Calculator">&times;</button>
             </div>
-
-            <!-- Tabs -->
             <div class="tabs">
                 <div class="tab active" data-tab="buy-to-let">Buy-to-Let</div>
                 <div class="tab" data-tab="buy-to-flip">Buy-to-Flip</div>
-                <div class="tab" data-tab="renovate-sell">Renovate &amp; Sell</div>
+                <div class="tab" data-tab="renovate-sell">Renovate & Sell</div>
             </div>
-
-            <!-- Subtitle -->
             <h3 id="calculator-subtitle" class="calc-subtitle">Buy-to-Let Calculator</h3>
-            <a id="deal-external-link"
-               class="deal-link"
-               href="#"
-               target="_blank"
-               rel="noopener">
-                View full listing &rarr;
-            </a>
-
-
-            <!-- Dynamic form -->
+            <a id="deal-external-link" class="deal-link" href="#" target="_blank" rel="noopener">View full listing &rarr;</a>
             <form id="calculator-form">
                 <!-- Fields injected by app.js -->
             </form>
-
-            <!-- Dynamic result panel -->
             <div id="calculator-result" class="calc-result-panel">
                 <!-- Summary rows injected by app.js -->
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer id="app-footer">
         <div class="footer-inner">
             <span>© 2025 Tiwaton Deal Sourcing</span>
             <span class="footer-right">Built for UK property investors</span>
         </div>
     </footer>
-
-    <!-- App script -->
     <script src="js/app.js"></script>
 </body>
 </html>
