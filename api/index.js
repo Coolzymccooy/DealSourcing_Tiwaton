@@ -1,4 +1,2 @@
-// JavaScript source code
-
-const app = require("../backend/app");
-module.exports = app;
+const app = require("../backend/server");
+module.exports = app; 
