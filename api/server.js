@@ -1,18 +1,21 @@
-﻿const express = require("express");
-const cors = require("cors");
-const Parser = require("rss-parser");
-const sqlite3 = require("sqlite3").verbose();
-const path = require("path");
+﻿// backend/app.js
+const express = require('express');
+const cors = require('cors');
+const Parser = require('rss-parser');
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
 const app = express();
 const parser = new Parser();
 
-// Middleware
+// Basic middleware
 app.use(cors());
 app.use(express.json());
 
-// SQLite setup (OK for now; persistence not guaranteed on Vercel)
-const dbPath = process.env.SQLITE_DB_PATH || path.join(__dirname, "deals.db");
+// SQLite database setup.
+// In production you'll want to use a managed database service,
+// because Vercel cannot persist a local SQLite file.
+const dbPath = process.env.SQLITE_DB_PATH || path.join(__dirname, 'deals.db');
 const db = new sqlite3.Database(dbPath);
 
 db.serialize(() => {
@@ -32,32 +35,34 @@ db.serialize(() => {
   `);
 });
 
+// Example feeds and keywords… (unchanged from your original)
 const FEEDS = [
     {
-        name: "Example Feed 1",
-        url: "https://www.rightmove.co.uk/rss/property-for-sale/find.html?locationIdentifier=REGION%5E93917"
+        name: 'Example Feed 1',
+        url: 'https://www.rightmove.co.uk/rss/property-for-sale/find.html?locationIdentifier=REGION%5E93917'
     },
     {
-        name: "Example Feed 2",
-        url: "https://www.zoopla.co.uk/for-sale/property/manchester/?rss=1"
+        name: 'Example Feed 2',
+        url: 'https://www.zoopla.co.uk/for-sale/property/manchester/?rss=1'
     }
 ];
 
 const KEYWORDS = {
-    renovation: ["renovation", "modernisation", "refurb", "needs work", "project"],
-    auction: ["auction", "bid", "bidding", "under the hammer"],
-    motivatedSeller: ["motivated", "quick sale", "must sell"],
-    belowMarketValue: ["bmv", "below market value", "discount", "reduced"],
-    chainFree: ["chain free", "no chain"],
-    investorOnly: ["investor", "cash buyers", "investment opportunity", "tenanted"]
+    renovation: ['renovation', 'modernisation', 'refurb', 'needs work', 'project'],
+    auction: ['auction', 'bid', 'bidding', 'under the hammer'],
+    motivatedSeller: ['motivated', 'quick sale', 'must sell'],
+    belowMarketValue: ['bmv', 'below market value', 'discount', 'reduced'],
+    chainFree: ['chain free', 'no chain'],
+    investorOnly: ['investor', 'cash buyers', 'investment opportunity', 'tenanted']
 };
 
+// Helper functions (unchanged)
 function detectTags(title, description) {
-    const text = (title + " " + (description || "")).toLowerCase();
+    const text = (title + ' ' + (description || '')).toLowerCase();
     const tags = [];
     for (const key in KEYWORDS) {
         const words = KEYWORDS[key];
-        if (words.some((word) => text.includes(word))) {
+        if (words.some(word => text.includes(word))) {
             tags.push(key);
         }
     }
@@ -66,21 +71,21 @@ function detectTags(title, description) {
 
 function extractPrice(text) {
     if (!text) return null;
-    const cleaned = text.replace(/,/g, "");
+    const cleaned = text.replace(/,/g, '');
     const match = cleaned.match(/£?(\d{5,9})/);
-    return match ? parseInt(match, 10) : null;
+    return match ? parseInt(match[1], 10) : null;
 }
 
 function scoreDeal(deal) {
     let score = 0;
     if (deal.price) score += 10;
     const tags = deal.tags || [];
-    if (tags.includes("renovation")) score += 20;
-    if (tags.includes("auction")) score += 10;
-    if (tags.includes("belowMarketValue")) score += 30;
-    if (tags.includes("motivatedSeller")) score += 15;
-    if (tags.includes("chainFree")) score += 10;
-    if (tags.includes("investorOnly")) score += 15;
+    if (tags.includes('renovation')) score += 20;
+    if (tags.includes('auction')) score += 10;
+    if (tags.includes('belowMarketValue')) score += 30;
+    if (tags.includes('motivatedSeller')) score += 15;
+    if (tags.includes('chainFree')) score += 10;
+    if (tags.includes('investorOnly')) score += 15;
     return Math.min(score, 100);
 }
 
@@ -110,8 +115,9 @@ async function fetchFeed(feed) {
     }
 }
 
+// Refresh all feeds and store in SQLite
 async function refreshDeals() {
-    console.log("Refreshing deals from feeds…");
+    console.log('Refreshing deals from feeds…');
     let allDeals = [];
     for (const feed of FEEDS) {
         const deals = await fetchFeed(feed);
@@ -138,22 +144,21 @@ async function refreshDeals() {
             );
         });
     });
-
     stmt.finalize();
-    console.log("Deals stored/updated in SQLite.");
+    console.log('Deals stored/updated in SQLite.');
 }
 
-// API: get deals
-app.get("/api/deals", (req, res) => {
+// API routes
+app.get('/api/deals', (req, res) => {
     db.all(
-        "SELECT id, source, title, link, description, pubDate, price, tags, score FROM deals ORDER BY created_at DESC LIMIT 200",
+        'SELECT id, source, title, link, description, pubDate, price, tags, score FROM deals ORDER BY created_at DESC LIMIT 200',
         [],
         (err, rows) => {
             if (err) {
-                console.error("Error reading deals:", err);
-                return res.status(500).json({ error: "Database error" });
+                console.error('Error reading deals:', err);
+                return res.status(500).json({ error: 'Database error' });
             }
-            const deals = rows.map((row) => ({
+            const deals = rows.map(row => ({
                 id: row.id,
                 source: row.source,
                 title: row.title,
@@ -161,7 +166,7 @@ app.get("/api/deals", (req, res) => {
                 description: row.description,
                 pubDate: row.pubDate,
                 price: row.price,
-                tags: row.tags ? row.tags.split(",") : [],
+                tags: row.tags ? row.tags.split(',') : [],
                 score: row.score
             }));
             res.json({ count: deals.length, deals });
@@ -169,11 +174,24 @@ app.get("/api/deals", (req, res) => {
     );
 });
 
-// API: trigger refresh (optional)
-app.get("/api/refresh", async (req, res) => {
+app.get('/api/refresh', async (req, res) => {
     await refreshDeals();
-    res.json({ status: "ok" });
+    res.json({ status: 'ok' });
 });
 
-// Export for Vercel
+// Start the server only in local development.
+// Vercel will import this file and use the exported `app`.
+//const port = process.env.PORT || 4000;
+//if (require.main === module) {
+//    app.listen(port, () => {
+//        console.log(`Backend running at http://localhost:${port}`);
+//        // Perform an initial refresh on startup
+//        refreshDeals().catch(err => console.error('Initial refresh error:', err));
+//    });
+//} else {
+//    module.exports = app;
+//    // Optional: perform one refresh when the module is loaded.
+//    refreshDeals().catch(err => console.error('Initial refresh error:', err));
+//}
 module.exports = app;
+//refreshDeals().catch(err => console.error('Initial refresh error:', err));
